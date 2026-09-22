@@ -441,6 +441,8 @@
       cantera: { name: "Plaza Paseo Cantera", barbers: ["Giovani"], slots: ["10:00 AM", "10:45 AM", "11:30 AM", "12:15 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "7:30 PM"] }
     };
 
+    let isDataLoaded = false;
+
     window.addEventListener("DOMContentLoaded", () => {
       const d = new Date();
       const offset = d.getTimezoneOffset();
@@ -452,6 +454,10 @@
 
       handleBranchChange();
       fetchData();
+      
+      setInterval(() => {
+        fetchData(true);
+      }, 15000);
     });
 
     function handleBranchChange() {
@@ -464,94 +470,70 @@
       renderTimeSlots();
     }
 
-    function parseTimeToMinutes(timeStr) {
-      const parts = timeStr.trim().split(' ');
-      const modifier = parts[1];
-      let [hours, minutes] = parts[0].split(':').map(Number);
-      if (modifier === 'PM' && hours !== 12) hours += 12;
-      if (modifier === 'AM' && hours === 12) hours = 0;
-      return hours * 60 + minutes;
-    }
-
     function renderTimeSlots() {
       const grid = document.getElementById("slotsGrid");
       grid.innerHTML = "";
 
+      if (!isDataLoaded) {
+        grid.innerHTML = '<div class="col-span-3 sm:col-span-4 text-center py-10 bg-[#1a2230] border border-amber-500/30 rounded-xl shadow-inner"><p class="text-amber-500 font-bold animate-pulse text-sm flex flex-col items-center gap-2"><svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Sincronizando horarios con el servidor...</p><p class="text-[10px] text-slate-400 mt-2">Por favor espera unos segundos</p></div>';
+        return;
+      }
+
       const branchKey = document.querySelector('input[name="sucursal"]:checked').value;
-      const slots = branchConfig[branchKey].slots;
-      const dateInput = document.getElementById("dateInput").value;
-      const selectedBarber = document.getElementById("barberSelect").value;
+      const branchName = branchConfig[branchKey].name;
+      const barber = document.getElementById("barberSelect").value;
+      const date = document.getElementById("dateInput").value;
 
       const now = new Date();
-      const [selYear, selMonth, selDay] = dateInput.split('-').map(Number);
-      const isToday = (
-        now.getFullYear() === selYear &&
-        (now.getMonth() + 1) === selMonth &&
-        now.getDate() === selDay
-      );
-      
+      const [selYear, selMonth, selDay] = date.split('-').map(Number);
+      const isToday = (now.getFullYear() === selYear && (now.getMonth() + 1) === selMonth && now.getDate() === selDay);
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-      slots.forEach(slot => {
-        const slotMinutes = parseTimeToMinutes(slot);
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = slot;
-        btn.className = "py-4 rounded-xl text-xs font-bold border transition duration-200 w-full";
+      branchConfig[branchKey].slots.forEach(timeStr => {
+        const parts = timeStr.trim().split(' ');
+        const modifier = parts[1];
+        let [hours, minutes] = parts[0].split(':').map(Number);
+        if (modifier === 'PM' && hours !== 12) hours += 12;
+        if (modifier === 'AM' && hours === 12) hours = 0;
+        const slotMinutes = hours * 60 + minutes;
 
-        // EL ARREGLO DE LA HORA: Solo bloquea por hora si es HOY
-        let isPast = false;
-        if (isToday && slotMinutes <= currentMinutes) {
-          isPast = true;
-        }
+        let isPast = (isToday && slotMinutes <= currentMinutes);
 
+        // Check occupancy
         const isOccupied = registeredBookings.some(b => {
-          // 1. Traductor inteligente de fechas de Google Sheets
-          let bDate = String(b.date).trim();
-          
-          // Si la fecha no viene en formato correcto YYYY-MM-DD, la traducimos
-          if (!/^\d{4}-\d{2}-\d{2}$/.test(bDate)) {
-            try {
-              // Intenta leer el formato largo (Tue Sep 22 2026...)
-              const dObj = new Date(bDate);
-              if (!isNaN(dObj.getTime())) {
-                 const y = dObj.getFullYear();
-                 const m = String(dObj.getMonth() + 1).padStart(2, '0');
-                 const d = String(dObj.getDate()).padStart(2, '0');
-                 bDate = `${y}-${m}-${d}`;
-              }
-            } catch(e) {}
-            
-            // Si viene en formato con diagonales (22/09/2026)
-            if (String(b.date).includes('/')) {
-               const p = String(b.date).split('/');
-               if (p.length === 3) bDate = `${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;
+          if (b.status && b.status.toLowerCase() === "cancelado") return false;
+          let bDateClean = String(b.date || "").trim();
+          if (bDateClean.includes("GMT")) {
+            const parsedDateObj = new Date(bDateClean);
+            if (!isNaN(parsedDateObj.getTime())) {
+              const off = parsedDateObj.getTimezoneOffset();
+              const localObj = new Date(parsedDateObj.getTime() - (off*60*1000));
+              bDateClean = localObj.toISOString().split('T')[0];
             }
           }
-
-          // 2. Comparamos los datos ya limpios y traducidos
-          return bDate === dateInput && 
-                 String(b.time).trim() === slot && 
-                 String(b.barber).trim() === selectedBarber && 
-                 String(b.status).toLowerCase() !== "cancelado" &&
-                 String(b.status).toLowerCase() !== "atendido";
+          return b.branchName === branchName && b.barber === barber && b.date === date && b.time === timeStr;
         });
 
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = timeStr;
+        btn.className = "py-3.5 rounded-xl border font-bold text-xs transition duration-200 shadow-md";
+
         if (isPast) {
-          btn.classList.add("slot-disabled");
           btn.disabled = true;
+          btn.className += " slot-disabled";
         } else if (isOccupied) {
-          btn.classList.add("slot-occupied");
           btn.disabled = true;
+          btn.className += " slot-occupied";
         } else {
-          if (selectedTime === slot) {
-            btn.classList.add("bg-amber-500", "border-amber-400", "text-black", "shadow-[0_0_15px_rgba(245,158,11,0.3)]");
+          if (selectedTime === timeStr) {
+            btn.className += " bg-amber-500 border-amber-400 text-slate-950 shadow-amber-500/30 scale-105";
           } else {
-            btn.classList.add("bg-[#1a2230]", "border-slate-700", "text-slate-300", "hover:border-amber-500");
+            btn.className += " bg-slate-900 border-slate-700 text-slate-300 hover:border-amber-500/50 hover:bg-[#1a2230]";
           }
           btn.onclick = () => {
-            selectedTime = slot;
-            document.getElementById("selectionHint").innerHTML = `<span class="text-emerald-400">✅ Has seleccionado: ${slot}</span>`;
+            selectedTime = timeStr;
+            document.getElementById("selectionHint").textContent = `✨ Horario seleccionado: ${timeStr}`;
             renderTimeSlots();
           };
         }
@@ -563,16 +545,26 @@
       event.preventDefault();
       const name = document.getElementById("clientName").value.trim();
       const phone = document.getElementById("clientPhone").value.trim();
-      if (!name || !phone) { alert("Por favor llena tu nombre y WhatsApp."); return; }
-      if (!selectedTime) { alert("⚠️ Por favor selecciona un horario tocando uno de los botones disponibles."); return; }
-
-      const btn = document.getElementById("btnSubmit");
       const branchKey = document.querySelector('input[name="sucursal"]:checked').value;
       const branchName = branchConfig[branchKey].name;
       const service = document.getElementById("serviceSelect").value;
       const barber = document.getElementById("barberSelect").value;
       const date = document.getElementById("dateInput").value;
 
+      if (!name || !phone) {
+        alert("⚠️ Por favor completa tu Nombre y WhatsApp.");
+        return;
+      }
+      if (phone.length !== 10 || isNaN(phone)) {
+        alert("⚠️ El WhatsApp debe ser un número válido de 10 dígitos.");
+        return;
+      }
+      if (!selectedTime) {
+        alert("⚠️ Por favor selecciona un horario disponible.");
+        return;
+      }
+
+      const btn = document.getElementById("btnSubmit");
       btn.disabled = true;
       btn.innerHTML = `<span class="animate-pulse">Procesando y validando...</span>`;
 
@@ -597,21 +589,38 @@
         const msg = encodeURIComponent(`Hola León Barbershop, acabo de agendar una cita:\n\n👤 Cliente: ${name}\n📍 Sucursal: ${branchName}\n💈 Barbero: ${barber}\n✂️ Servicio: ${service}\n📅 Fecha: ${date}\n⏰ Hora: ${selectedTime}\nFolio: ${newBooking.folio}`);
         window.open(`https://wa.me/529934049163?text=${msg}`, "_blank");
 
-        document.getElementById("clientName").value = ""; document.getElementById("clientPhone").value = ""; selectedTime = null; renderTimeSlots(); updateAdminBadge();
+        document.getElementById("clientName").value = ""; 
+        document.getElementById("clientPhone").value = ""; 
+        selectedTime = null; 
+        
+        isDataLoaded = false; 
+        renderTimeSlots(); 
+        fetchData();
       } catch (e) {
         alert("Ocurrió un problema de conexión al servidor.");
       } finally {
-        btn.disabled = false; btn.textContent = "Confirmar Cita";
+        btn.disabled = false; 
+        btn.textContent = "Confirmar Cita";
       }
     }
 
-    async function fetchData() {
+    async function fetchData(isBackground = false) {
+      if (!isBackground) {
+        isDataLoaded = false;
+        renderTimeSlots();
+      }
       try {
         const res = await fetch(SCRIPT_URL, { method: "GET", redirect: "follow" });
         const data = await res.json();
-        if (data.bookings) { registeredBookings = data.bookings; renderTimeSlots(); updateAdminBadge(); }
+        if (data.bookings) { registeredBookings = data.bookings; }
         if (data.reviews) { reviewsList = data.reviews; renderReviews(); }
-      } catch (e) { console.error("Error cargando base de datos", e); }
+      } catch (e) { 
+        console.error("Error cargando base de datos", e); 
+      } finally {
+        isDataLoaded = true;
+        renderTimeSlots(); 
+        updateAdminBadge();
+      }
     }
 
     function renderReviews() {
@@ -660,7 +669,6 @@
       } finally { btn.disabled = false; btn.textContent = "Publicar Opinión"; }
     }
 
-    // ACCESO ADMIN Y LÓGICA DE BOTONES
     function updateAdminBadge() { document.getElementById("adminBadge").textContent = registeredBookings.filter(b => b.status.toLowerCase() !== "cancelado" && b.status.toLowerCase() !== "atendido").length; }
     function openAdminModal() { document.getElementById("adminPinModal").classList.remove("hidden"); setTimeout(() => document.getElementById("adminPinInput").focus(), 100); }
     function closeAdminModal() { document.getElementById("adminPinModal").classList.add("hidden"); document.getElementById("adminPinInput").value = ""; }
@@ -680,11 +688,9 @@
       if (active.length === 0) { list.innerHTML = '<p class="text-slate-400 text-center py-10 text-sm">No hay citas pendientes.</p>'; return; }
 
       active.forEach(b => {
-        // Formateo elegante de fecha a Español
         let dateStr = b.date;
         try {
             let dateObj = new Date(b.date);
-            // Solo separar si es estrictamente formato YYYY-MM-DD
             if(typeof b.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(b.date.trim())) {
                 const parts = b.date.split('-');
                 dateObj = new Date(parts[0], parts[1]-1, parts[2]);
@@ -692,7 +698,6 @@
             if(!isNaN(dateObj.getTime())) {
                 const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 dateStr = dateObj.toLocaleDateString('es-MX', opciones);
-                // Mayúscula inicial
                 dateStr = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
             }
         } catch(e) {}
