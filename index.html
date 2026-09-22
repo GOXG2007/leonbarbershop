@@ -505,13 +505,37 @@
           isPast = true;
         }
 
-        const isOccupied = registeredBookings.some(b => 
-          b.date === dateInput && 
-          b.time === slot && 
-          b.barber === selectedBarber && 
-          b.status !== "cancelado" &&
-          b.status !== "atendido"
-        );
+        const isOccupied = registeredBookings.some(b => {
+          // 1. Traductor inteligente de fechas de Google Sheets
+          let bDate = String(b.date).trim();
+          
+          // Si la fecha no viene en formato correcto YYYY-MM-DD, la traducimos
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(bDate)) {
+            try {
+              // Intenta leer el formato largo (Tue Sep 22 2026...)
+              const dObj = new Date(bDate);
+              if (!isNaN(dObj.getTime())) {
+                 const y = dObj.getFullYear();
+                 const m = String(dObj.getMonth() + 1).padStart(2, '0');
+                 const d = String(dObj.getDate()).padStart(2, '0');
+                 bDate = `${y}-${m}-${d}`;
+              }
+            } catch(e) {}
+            
+            // Si viene en formato con diagonales (22/09/2026)
+            if (String(b.date).includes('/')) {
+               const p = String(b.date).split('/');
+               if (p.length === 3) bDate = `${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;
+            }
+          }
+
+          // 2. Comparamos los datos ya limpios y traducidos
+          return bDate === dateInput && 
+                 String(b.time).trim() === slot && 
+                 String(b.barber).trim() === selectedBarber && 
+                 String(b.status).toLowerCase() !== "cancelado" &&
+                 String(b.status).toLowerCase() !== "atendido";
+        });
 
         if (isPast) {
           btn.classList.add("slot-disabled");
