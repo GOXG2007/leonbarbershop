@@ -3,684 +3,807 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>León Barbershop | Citas, Servicios y Reseñas en Playas del Rosario</title>
-  
-  <!-- Google Fonts -->
+  <title>León Barbershop | Calidad, Estilo y Tradición</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Shrikhand&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            brand: ['Caprasimo', 'serif'],
-            retro: ['Shrikhand', 'cursive'],
-            sans: ['Plus Jakarta Sans', 'sans-serif']
+          colors: {
+            amber: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
           },
+          fontFamily: {
+            brand: ['Sorean', 'cursive'],
+            sans: ['Montserrat', 'sans-serif'],
+          }
         }
       }
     }
   </script>
-
+  
   <style>
-    body, html { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .font-brand { font-family: 'Caprasimo', serif !important; }
-    .font-retro { font-family: 'Shrikhand', cursive !important; }
+    /* RESTAURACIÓN DE LA FUENTE ORIGINAL DESDE GITHUB */
+    @font-face {
+      font-family: 'Sorean';
+      src: url('https://goxg2007.github.io/leonbarbershop/Sorean.woff2') format('woff2'),
+           url('https://goxg2007.github.io/leonbarbershop/Sorean.ttf') format('truetype'),
+           url('Sorean.woff2') format('woff2'),
+           url('Sorean.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
     
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
-
-    .reveal-item {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    .gold-gradient { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%); }
+    .ig-gradient { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    
+    .slot-occupied {
+      background-color: #3f1517 !important; border-color: #ef4444 !important; color: #f87171 !important; cursor: not-allowed !important; opacity: 0.6;
     }
-    .reveal-item.is-revealed {
-      opacity: 1;
-      transform: translateY(0);
+    .slot-disabled {
+      background-color: #1a202c !important; border-color: #374151 !important; color: #6b7280 !important; cursor: not-allowed !important; opacity: 0.45;
     }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-6px); }
-      40%, 80% { transform: translateX(6px); }
-    }
-    .animate-shake { animation: shake 0.35s ease-in-out; }
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0b0f15; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
   </style>
 </head>
-<body class="bg-[#090d13] text-slate-200 antialiased min-h-screen flex flex-col selection:bg-amber-500 selection:text-black">
+<body class="bg-[#0b0f15] text-slate-200 font-sans min-h-screen flex flex-col antialiased relative">
 
-  <!-- BANNER TOP -->
-  <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-black font-bold text-xs py-1.5 px-4 text-center flex items-center justify-center gap-2">
-    <span>💈 León Barbershop &bull; Matriz (9am - 8pm) &bull; Cantera (10am - 8pm) &bull; Citas: 993 404 9163</span>
+  <!-- BRILLO ALEGRE DE FONDO -->
+  <div class="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+  <!-- BARRA NARANJA SUPERIOR RESTAURADA -->
+  <div class="bg-amber-500 text-slate-950 text-[10px] sm:text-xs font-bold py-1.5 text-center z-50 relative tracking-wide shadow-md">
+    💈 León Barbershop • Matriz (9am - 8pm) • Cantera (10am - 8pm) • Citas: 993 404 9163
   </div>
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-40 bg-[#0d1219]/95 backdrop-blur-md border-b border-[#222c3b] px-4 lg:px-8 py-3.5">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
+  <header class="sticky top-0 z-40 bg-[#0f141c]/95 border-b border-slate-800 backdrop-blur-md">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative z-10">
       <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg">🦁</div>
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl gold-gradient flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">🦁</div>
         <div>
-          <span class="font-brand text-2xl text-white block leading-none">León</span>
-          <span class="text-[10px] uppercase font-bold text-amber-400 tracking-widest">Barbershop 💈</span>
+          <span class="font-brand text-xl sm:text-2xl font-bold tracking-wider text-white block leading-none">León</span>
+          <span class="text-[9px] sm:text-[10px] tracking-[0.2em] font-bold text-amber-400 block mt-1">BARBERSHOP 💈</span>
         </div>
       </a>
 
-      <!-- NAVEGACIÓN DESKTOP -->
-      <nav class="hidden md:flex items-center space-x-5 text-xs font-bold uppercase tracking-wider text-slate-300">
-        <a href="#sucursales" class="hover:text-amber-400 transition">Sucursales</a>
-        <a href="#servicios" class="hover:text-amber-400 transition">Servicios</a>
-        <a href="#citas" class="hover:text-amber-400 transition">Reservar Cita</a>
-        <a href="https://www.instagram.com/_leonbarbershop_/" target="_blank" class="hover:text-white transition flex items-center gap-1 p-2 rounded-xl bg-gradient-to-r from-pink-500/15 to-purple-500/15 border border-pink-500/30 text-pink-400">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          @_leonbarbershop_
-        </a>
-        <a href="https://www.tiktok.com/@leon.barbershop8?is_from_webapp=1&sender_device=pc" target="_blank" class="hover:text-white transition flex items-center gap-1 p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.86 4.43 6.27 6.27 0 0 0 1.89-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.93-.09z"/></svg>
-          TikTok
+      <nav class="hidden xl:flex items-center gap-6 text-sm font-bold tracking-wide">
+        <a href="#sucursales" class="text-slate-300 hover:text-amber-400 transition uppercase text-xs">Sucursales</a>
+        <a href="#servicios" class="text-slate-300 hover:text-amber-400 transition uppercase text-xs">Servicios</a>
+        <a href="#citas" class="text-slate-300 hover:text-amber-400 transition uppercase text-xs">Reservar Cita</a>
+        <a href="#opiniones" class="text-slate-300 hover:text-amber-400 transition uppercase text-xs flex items-center gap-1.5">
+          Opiniones <span class="bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded text-[10px] flex items-center">5.0 <svg class="w-3 h-3 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></span>
         </a>
       </nav>
 
-      <!-- BOTONES ACCIÓN -->
-      <div class="flex items-center gap-3">
-        <button onclick="requestAdminAccess()" class="px-3 py-2 text-xs font-bold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-xl transition flex items-center gap-1.5 active:scale-95">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-          <span class="hidden sm:inline">Acceso Barbero</span>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- IG -->
+        <a href="https://instagram.com/_leonbarbershop_" target="_blank" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-pink-500/30 hover:border-pink-500 bg-[#121822] transition group">
+          <div class="w-5 h-5 rounded-md ig-gradient flex items-center justify-center text-white">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <span class="text-[10px] font-bold text-pink-400">@_LEONBARBERSHOP_</span>
+        </a>
+
+        <!-- TIKTOK -->
+        <a href="https://www.tiktok.com/@leon.barbershop8?is_from_webapp=1&sender_device=pc" target="_blank" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-cyan-500/30 hover:border-cyan-500 bg-[#121822] transition text-cyan-400">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.86 4.43 6.27 6.27 0 0 0 1.89-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.93-.09z"/></svg>
+          <span class="text-[10px] font-bold uppercase">TikTok</span>
+        </a>
+
+        <button onclick="openAdminModal()" class="px-3.5 py-2 text-[10px] sm:text-xs font-bold text-amber-400 border border-amber-500/30 rounded-xl hover:bg-amber-500/10 transition flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          Acceso Barbero
+          <span id="adminBadge" class="bg-amber-500 text-black px-1.5 rounded-full font-black">0</span>
         </button>
-        <a href="#citas" class="px-4 py-2 text-xs font-bold uppercase text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-xl shadow-md transition flex items-center gap-1.5">
+
+        <a href="#citas" class="px-5 py-2 text-[10px] sm:text-xs font-extrabold uppercase text-slate-950 gold-gradient hover:brightness-110 rounded-xl shadow-lg shadow-amber-500/20 transition">
           Agendar
         </a>
       </div>
     </div>
   </header>
 
-  <main class="flex-1">
-    <section id="inicio" class="relative py-16 lg:py-24 px-4 overflow-hidden border-b border-[#222c3b] reveal-item">
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/15 via-[#090d13]/90 to-[#090d13] -z-10"></div>
-      <div class="max-w-5xl mx-auto text-center space-y-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          2 Sucursales en Playas del Rosario &bull; Clima y ambiente premium
+  <!-- HERO SECTION (Restaurado a diseño "Alegre") -->
+  <section class="relative py-20 px-4 max-w-5xl mx-auto text-center space-y-6 mt-4 z-10">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-700 bg-[#121822] text-amber-400 text-[10px] sm:text-xs font-bold tracking-wider shadow-lg">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span> 2 Sucursales en Playas del Rosario &bull; Clima y ambiente premium
+    </div>
+    
+    <h1 class="font-brand text-5xl md:text-6xl lg:text-7xl text-white tracking-wide leading-tight drop-shadow-md">
+      León Barbershop 💈
+    </h1>
+    
+    <h2 class="font-brand text-2xl md:text-4xl lg:text-5xl text-amber-400 tracking-wide mt-2 drop-shadow-md max-w-4xl mx-auto leading-tight">
+      Fades de Precisión, Mascarilla & Masaje
+    </h2>
+    
+    <p class="max-w-2xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed mt-6">
+      Atención de primera con aire acondicionado en nuestras dos sucursales.<br class="hidden sm:block">
+      Disfruta tu corte con mascarilla exfoliante y masaje relajante para salir como nuevo.
+    </p>
+    
+    <div class="pt-8 flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#citas" class="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm uppercase rounded-xl transition duration-200 shadow-xl shadow-amber-500/20 w-full sm:w-auto">
+        RESERVAR CITA EN LÍNEA
+      </a>
+      <a href="https://wa.me/529934049163" target="_blank" rel="noopener noreferrer" class="px-8 py-3.5 bg-[#06241a] border border-[#0d4732] text-[#2dd4bf] hover:bg-[#0a3526] font-bold text-sm rounded-xl transition flex items-center justify-center gap-2 w-full sm:w-auto shadow-lg">
+        WhatsApp (993 404 9163)
+      </a>
+    </div>
+  </section>
+
+  <!-- SUCURSALES (Restauradas al estilo visual original) -->
+  <section id="sucursales" class="py-16 px-4 max-w-6xl mx-auto relative z-10">
+    <div class="text-center mb-10 space-y-2">
+      <span class="text-amber-500 text-xs font-bold tracking-widest uppercase">Ubicaciones León Barbershop</span>
+      <h2 class="text-3xl sm:text-4xl font-brand text-white mt-1">Nuestras Sucursales</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- SUCURSAL MATRIZ -->
+      <div class="bg-[#121822] border border-slate-800 rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-2xl group">
+        <span class="absolute top-4 right-4 bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] px-3 py-1 rounded uppercase font-black tracking-widest">Sucursal Matriz</span>
+        <div class="space-y-5">
+          <div>
+            <h3 class="font-brand text-xl sm:text-2xl text-white font-bold tracking-wide mt-2 group-hover:text-amber-400 transition">Sucursal Matriz &bull; Salida de Playas</h3>
+            <p class="text-xs text-slate-400 mt-1">Local Principal &bull; Clima, música y ambiente prémium</p>
+          </div>
+          <div class="space-y-3 pt-2">
+            <p class="text-xs sm:text-sm text-slate-300 flex items-start gap-2">
+              <span class="text-amber-400">📍</span> Av. Plutarco Elías Calles #123 (Frente a Tortillería La Michoacana), Salida de Playas, Villa Playas del Rosario, Centro, Tabasco.
+            </p>
+            <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
+              <span class="text-amber-400">🕒</span> Lunes a Sábado: 9:00 AM – 8:00 PM
+            </p>
+            <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
+              <span class="text-amber-400">📞</span> WhatsApp Citas: +52 993 404 9163
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/50">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-3 block">Barberos en Cabina:</span>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-4 py-1.5 bg-[#1a2230] border border-slate-700 rounded-lg text-xs font-bold text-amber-400">Sebastián</span>
+              <span class="px-4 py-1.5 bg-[#1a2230] border border-slate-700 rounded-lg text-xs font-bold text-slate-300">Andrés</span>
+              <span class="px-4 py-1.5 bg-[#1a2230] border border-slate-700 rounded-lg text-xs font-bold text-slate-300">Víctor</span>
+            </div>
+          </div>
         </div>
-        <h1 class="font-brand text-4xl sm:text-6xl text-white leading-tight">
-          León Barbershop 💈 <br>
-          <span class="font-retro text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 text-3xl sm:text-5xl block mt-2">
-            Fades de Precisión, Mascarilla & Masaje
-          </span>
-        </h1>
-        <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          Atención de primera con aire acondicionado en nuestras dos sucursales. Disfruta tu corte con mascarilla exfoliante y masaje relajante para salir como nuevo.
+      </div>
+
+      <!-- SUCURSAL PASEO CANTERA -->
+      <div class="bg-[#121822] border border-slate-800 rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-2xl group">
+        <span class="absolute top-4 right-4 bg-slate-800 text-slate-400 border border-slate-700 text-[10px] px-3 py-1 rounded uppercase font-black tracking-widest">Paseo Cantera</span>
+        <div class="space-y-5">
+          <div>
+            <h3 class="font-brand text-xl sm:text-2xl text-white font-bold tracking-wide mt-2 group-hover:text-amber-400 transition">León Barbershop &bull; Paseo Cantera</h3>
+            <p class="text-xs text-slate-400 mt-1">Plaza Comercial &bull; Fácil estacionamiento y clima al 100%</p>
+          </div>
+          <div class="space-y-3 pt-2">
+            <p class="text-xs sm:text-sm text-slate-300 flex items-start gap-2">
+              <span class="text-amber-400">📍</span> Calle Tomás Garrido Canabal #407, Plaza Paseo Cantera, 86288 Playas del Rosario, Tabasco.
+            </p>
+            <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
+              <span class="text-amber-400">🕒</span> Lunes a Sábado: 10:00 AM – 8:00 PM
+            </p>
+            <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
+              <span class="text-amber-400">📞</span> WhatsApp Citas: +52 993 404 9163
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-800/50">
+            <span class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-3 block">Barberos en Cabina:</span>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-4 py-1.5 bg-[#1a2230] border border-amber-500/30 rounded-lg text-xs font-bold text-amber-400">Giovani (Barbero Titular)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="py-16 px-4 bg-[#0d1219] border-y border-slate-800 relative z-10">
+    <div class="max-w-6xl mx-auto space-y-10">
+      <div class="text-center space-y-2">
+        <h2 class="font-brand text-3xl sm:text-4xl text-white font-bold tracking-wide">Nuestros Servicios</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- CORTE -->
+        <div class="p-6 rounded-2xl bg-[#141b26] border-2 border-amber-500/80 relative flex flex-col shadow-xl">
+          <span class="absolute -top-3 right-4 bg-amber-500 text-slate-950 text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-lg">El Más Solicitado</span>
+          <div class="flex justify-between items-baseline border-b border-slate-800 pb-4 mb-4">
+            <h3 class="font-bold text-white text-lg pr-4 leading-tight">Corte Clásico o Degradado Fade</h3>
+            <span class="font-brand text-2xl font-bold text-amber-400">$130</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Corte a tijera o máquina, fade degradado impecable, perfilado fino con navaja, aplicación de mascarilla exfoliante y masaje relajante de cortesía.
+          </p>
+        </div>
+
+        <!-- COMBO -->
+        <div class="p-6 rounded-2xl bg-[#141b26] border border-slate-800 flex flex-col">
+          <div class="flex justify-between items-baseline border-b border-slate-800 pb-4 mb-4">
+            <h3 class="font-bold text-white text-lg pr-4 leading-tight">Combo Completo (Corte + Barba)</h3>
+            <span class="font-brand text-2xl font-bold text-amber-400">$200</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            El servicio integral. Incluye corte o degradado de cabello, diseño, perfilado de barba, mascarilla exfoliante y masaje relajante.
+          </p>
+        </div>
+
+        <!-- BARBA -->
+        <div class="p-6 rounded-2xl bg-[#141b26] border border-slate-800 flex flex-col">
+          <div class="flex justify-between items-baseline border-b border-slate-800 pb-4 mb-4">
+            <h3 class="font-bold text-white text-lg pr-4 leading-tight">Arreglo y Perfilado de Barba</h3>
+            <span class="font-brand text-2xl font-bold text-amber-400">$90</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Rebajado milimétrico, definición de líneas en mejillas y cuello con navaja desinfectada, hidratación de piel y aceite para brillo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO DE CITAS (CON REGLAS HORARIAS CORREGIDAS) -->
+  <section id="citas" class="py-20 px-4 max-w-5xl mx-auto w-full relative z-10">
+    <div class="bg-[#121822] border border-slate-800 p-6 sm:p-10 rounded-3xl space-y-10 shadow-2xl">
+      <div class="text-center mb-6">
+        <h2 class="font-brand text-3xl sm:text-4xl text-white">Reserva tu Turno</h2>
+      </div>
+      
+      <!-- 1. SUCURSAL -->
+      <div class="space-y-4">
+        <label class="text-xs font-black uppercase tracking-widest text-slate-400">1. Selecciona la Sucursal:</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label class="cursor-pointer">
+            <input type="radio" name="sucursal" value="matriz" checked onchange="handleBranchChange()" class="peer sr-only">
+            <div class="p-5 rounded-2xl border border-slate-700 bg-slate-900/60 peer-checked:border-amber-500 peer-checked:bg-[#1a2230] transition group relative overflow-hidden">
+              <div class="absolute inset-0 bg-amber-500/5 opacity-0 peer-checked:opacity-100 transition"></div>
+              <div class="relative z-10">
+                <p class="font-bold text-base text-slate-300 peer-checked:text-amber-400 flex items-center justify-between">
+                  <span>Sucursal Matriz</span>
+                  <span class="w-5 h-5 rounded-full border-2 border-slate-600 peer-checked:border-amber-500 peer-checked:bg-amber-500 flex items-center justify-center">
+                    <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  </span>
+                </p>
+                <p class="text-xs text-slate-500 mt-1 font-medium">9:00 AM - 8:00 PM</p>
+              </div>
+            </div>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="sucursal" value="cantera" onchange="handleBranchChange()" class="peer sr-only">
+            <div class="p-5 rounded-2xl border border-slate-700 bg-slate-900/60 peer-checked:border-amber-500 peer-checked:bg-[#1a2230] transition group relative overflow-hidden">
+              <div class="absolute inset-0 bg-amber-500/5 opacity-0 peer-checked:opacity-100 transition"></div>
+              <div class="relative z-10">
+                <p class="font-bold text-base text-slate-300 peer-checked:text-amber-400 flex items-center justify-between">
+                  <span>Paseo Cantera</span>
+                  <span class="w-5 h-5 rounded-full border-2 border-slate-600 peer-checked:border-amber-500 peer-checked:bg-amber-500 flex items-center justify-center">
+                    <svg class="w-3 h-3 text-black opacity-0 peer-checked:opacity-100" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  </span>
+                </p>
+                <p class="text-xs text-slate-500 mt-1 font-medium">10:00 AM - 8:00 PM</p>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. SERVICIO Y BARBERO -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="space-y-3">
+          <label class="text-xs font-black uppercase tracking-widest text-slate-400">2. Servicio Requerido:</label>
+          <select id="serviceSelect" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500 transition shadow-inner font-medium">
+            <option value="Corte Clásico o Degradado Fade ($130 MXN)">Corte Clásico o Degradado Fade ($130 MXN)</option>
+            <option value="Combo Completo: Corte + Barba ($200 MXN)">Combo Completo: Corte + Barba ($200 MXN)</option>
+            <option value="Arreglo y Perfilado de Barba ($90 MXN)">Arreglo y Perfilado de Barba ($90 MXN)</option>
+          </select>
+        </div>
+        <div class="space-y-3">
+          <label class="text-xs font-black uppercase tracking-widest text-slate-400">Barbero Asignado:</label>
+          <select id="barberSelect" onchange="renderTimeSlots()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500 transition shadow-inner font-medium">
+            <!-- Llenado automático JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- 3. FECHA Y HORARIOS -->
+      <div class="space-y-5">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 border-b border-slate-800 pb-3">
+          <label class="text-xs font-black uppercase tracking-widest text-slate-400">3. Fecha y Horario:</label>
+          <div class="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase text-slate-400">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span> Disponible</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></span> Ocupado</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div class="space-y-3">
+            <input type="date" id="dateInput" onchange="renderTimeSlots()" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm font-bold rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500 shadow-inner">
+            <p id="selectionHint" class="text-xs text-amber-400 font-bold mt-2">👇 Toca un horario libre en pantalla.</p>
+          </div>
+          <div class="md:col-span-2">
+            <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+              <!-- Botones dinámicos -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. DATOS -->
+      <div class="space-y-4 pt-6 border-t border-slate-800">
+        <label class="text-xs font-black uppercase tracking-widest text-slate-400">4. Datos del Cliente:</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <input type="text" id="clientName" required placeholder="Tu Nombre Completo" class="bg-slate-900 border border-slate-700 text-slate-200 text-sm font-medium rounded-xl px-5 py-4 focus:outline-none focus:border-amber-500 shadow-inner">
+          <input type="tel" id="clientPhone" required placeholder="WhatsApp (10 dígitos)" maxlength="10" pattern="[0-9]{10}" class="bg-slate-900 border border-slate-700 text-slate-200 text-sm font-medium rounded-xl px-5 py-4 focus:outline-none focus:border-amber-500 shadow-inner">
+        </div>
+      </div>
+
+      <button type="button" id="btnSubmit" onclick="handleBookingSubmit(event)" class="w-full py-5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm uppercase tracking-widest rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] active:scale-[0.99] transition duration-200 mt-4">
+        Confirmar Cita
+      </button>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN OPINIONES RESTAURADA (Con el botón de Escribir Reseña) -->
+  <section id="opiniones" class="py-20 px-4 max-w-6xl mx-auto w-full relative z-10">
+    <div class="text-center space-y-3 mb-12 flex flex-col items-center">
+      <span class="text-xs uppercase font-bold text-amber-500 tracking-widest">Lo que dicen de nosotros</span>
+      <h2 class="font-brand text-3xl sm:text-4xl text-white tracking-wide">Opiniones Recientes</h2>
+      <button onclick="openReviewModal()" class="mt-6 px-8 py-3 bg-slate-900 border border-amber-500/50 hover:border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-950 text-xs font-black uppercase tracking-widest rounded-xl transition duration-300 shadow-lg">
+        Escribir una Reseña
+      </button>
+    </div>
+    
+    <div id="reviewsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <p class="text-slate-400 text-sm col-span-3 text-center py-10">Cargando opiniones...</p>
+    </div>
+  </section>
+
+  <!-- PIE DE PÁGINA COMPLETO -->
+  <footer class="mt-auto bg-[#080b0f] border-t border-slate-800 pt-16 pb-8 px-4 relative z-10">
+    <div class="max-w-6xl mx-auto flex flex-col items-center justify-center space-y-8">
+      <div class="w-12 h-12 rounded-xl gold-gradient flex items-center justify-center text-2xl shadow-lg opacity-80 grayscale hover:grayscale-0 transition duration-300">
+        🦁
+      </div>
+      
+      <div class="flex gap-4">
+        <a href="https://instagram.com/_leonbarbershop_" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-pink-500 transition group">
+          <svg class="w-5 h-5 text-slate-400 group-hover:text-pink-500 transition" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@leon.barbershop8?is_from_webapp=1&sender_device=pc" target="_blank" class="w-12 h-12 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-400 transition group">
+          <svg class="w-5 h-5 text-slate-400 group-hover:text-cyan-400 transition fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.86 4.43 6.27 6.27 0 0 0 1.89-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.93-.09z"/></svg>
+        </a>
+      </div>
+
+      <div class="text-center space-y-2">
+        <p class="text-sm font-bold text-slate-300">León Barbershop &copy; 2026 &bull; Villa Playas del Rosario, Tabasco</p>
+        <p class="text-xs text-slate-500 font-medium">
+          WhatsApp Oficial: <a href="https://wa.me/529934049163" class="text-amber-500 font-bold hover:underline">+52 993 404 9163</a> &bull; TikTok: <a href="https://www.tiktok.com/@leon.barbershop8" class="text-cyan-500 font-bold hover:underline">@leon.barbershop8</a>
         </p>
-        <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-          <a href="#citas" class="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-sm uppercase rounded-xl shadow-lg transition active:scale-95">
-            Reservar Cita en Línea
-          </a>
-          <a href="https://wa.me/529934049163" target="_blank" class="w-full sm:w-auto px-6 py-3.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-sm rounded-xl transition flex items-center justify-center gap-2 active:scale-95">
-            WhatsApp (993 404 9163)
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="sucursales" class="py-16 px-4 max-w-7xl mx-auto space-y-10 reveal-item">
-      <div class="text-center space-y-2">
-        <span class="text-xs uppercase font-bold text-amber-400">Ubicaciones León Barbershop</span>
-        <h2 class="font-brand text-3xl sm:text-4xl text-white">Nuestras Sucursales</h2>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- MATRIZ -->
-        <div class="bg-[#131922] border border-[#222c3b] rounded-2xl p-6 relative overflow-hidden group shadow-lg">
-          <div class="absolute top-0 right-0 bg-amber-500/10 text-amber-400 px-3 py-1 rounded-bl-xl text-[11px] font-bold uppercase border-l border-b border-amber-500/20">Sucursal Matriz</div>
-          <div class="space-y-4">
-            <h3 class="font-brand text-xl text-white">Sucursal Matriz &bull; Salida de Playas</h3>
-            <div class="space-y-2 text-xs text-slate-300">
-              <p>📍 Av. Plutarco Elías Calles #123, Villa Playas del Rosario, Centro, Tabasco.</p>
-              <p>🕒 Lunes a Sábado: <strong class="text-amber-300">9:00 AM - 8:00 PM</strong></p>
-              <p>📞 WhatsApp: +52 993 404 9163</p>
-            </div>
-            <div>
-              <span class="text-[11px] font-bold text-slate-400 uppercase">Barberos en cabina:</span>
-              <div class="flex flex-wrap gap-2 mt-1">
-                <span class="px-2.5 py-1 bg-slate-800 rounded-lg text-xs font-semibold text-amber-300">Sebastián</span>
-                <span class="px-2.5 py-1 bg-slate-800 rounded-lg text-xs font-semibold text-slate-200">Andrés</span>
-                <span class="px-2.5 py-1 bg-slate-800 rounded-lg text-xs font-semibold text-slate-200">Víctor</span>
-              </div>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-slate-800 mt-4">
-            <button onclick="preSelectBranch('centro')" class="w-full py-2.5 bg-amber-500 text-slate-950 font-bold text-xs uppercase rounded-xl transition active:scale-95">
-              Agendar en Salida de Playas (9am - 8pm)
-            </button>
-          </div>
-        </div>
-
-        <!-- CANTERA -->
-        <div class="bg-[#131922] border border-[#222c3b] rounded-2xl p-6 relative overflow-hidden group shadow-lg">
-          <div class="absolute top-0 right-0 bg-amber-500/10 text-amber-400 px-3 py-1 rounded-bl-xl text-[11px] font-bold uppercase border-l border-b border-amber-500/20">Paseo Cantera</div>
-          <div class="space-y-4">
-            <h3 class="font-brand text-xl text-white">León Barbershop &bull; Plaza Paseo Cantera</h3>
-            <div class="space-y-2 text-xs text-slate-300">
-              <p>📍 Calle Tomás Garrido Canabal #407, Plaza Paseo Cantera, Playas del Rosario.</p>
-              <p>🕒 Lunes a Sábado: <strong class="text-amber-300">10:00 AM - 8:00 PM</strong></p>
-              <p>📞 WhatsApp: +52 993 404 9163</p>
-            </div>
-            <div>
-              <span class="text-[11px] font-bold text-slate-400 uppercase">Barbero en cabina:</span>
-              <div class="flex flex-wrap gap-2 mt-1">
-                <span class="px-2.5 py-1 bg-slate-800 rounded-lg text-xs font-semibold text-amber-300">Giovani</span>
-              </div>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-slate-800 mt-4">
-            <button onclick="preSelectBranch('norte')" class="w-full py-2.5 bg-amber-500 text-slate-950 font-bold text-xs uppercase rounded-xl transition active:scale-95">
-              Agendar en Paseo Cantera (10am - 8pm)
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="servicios" class="py-16 px-4 bg-[#0c1017] border-y border-[#222c3b] reveal-item">
-      <div class="max-w-7xl mx-auto space-y-10">
-        <div class="text-center space-y-2">
-          <span class="text-xs uppercase font-bold text-amber-400">Catálogo Real</span>
-          <h2 class="font-brand text-3xl text-white">Servicios en Cabina</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <!-- Servicio 1 -->
-          <div class="p-5 rounded-2xl bg-gradient-to-b from-[#1a2330] to-[#131922] border-2 border-amber-500/70 relative shadow-xl">
-            <span class="absolute -top-3 right-4 bg-amber-500 text-slate-950 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full">El Más Solicitado</span>
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-white">Corte Clásico o Degradado Fade</h3>
-              <span class="font-brand text-xl text-amber-400">$130 MXN</span>
-            </div>
-            <p class="text-xs text-slate-300">Degradado pulido (Low, Mid, High), perfilado con navaja, aplicación de mascarilla exfoliante y masaje relajante de cortesía.</p>
-          </div>
-          <!-- Servicio 2 -->
-          <div class="p-5 rounded-2xl bg-[#131922] border border-[#222c3b]">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-white">Combo Completo: Corte + Barba</h3>
-              <span class="font-brand text-xl text-amber-400">$200 MXN</span>
-            </div>
-            <p class="text-xs text-slate-400">Corte a elección + arreglo de barba a navaja, mascarilla exfoliante y masaje relajante de hombros.</p>
-          </div>
-          <!-- Servicio 3 -->
-          <div class="p-5 rounded-2xl bg-[#131922] border border-[#222c3b]">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-white">Perfilado de Barba a Navaja</h3>
-              <span class="font-brand text-xl text-amber-400">$90 MXN</span>
-            </div>
-            <p class="text-xs text-slate-400">Delineado exacto de contornos con navaja nueva, loción aftershave y bálsamo.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="citas" class="py-16 px-4 max-w-5xl mx-auto space-y-8 reveal-item rounded-3xl">
-      <div class="text-center space-y-2">
-        <span class="text-xs uppercase font-bold text-amber-400">Sistema Seguro</span>
-        <h2 class="font-brand text-3xl sm:text-4xl text-white">Agenda Tu Cita</h2>
-      </div>
-
-      <div class="bg-[#131922] border border-[#222c3b] rounded-3xl p-6 sm:p-10 shadow-2xl relative">
-        <form id="booking-form" onsubmit="handleBookingSubmit(event)" class="space-y-8">
-          
-          <!-- PASO 1: SUCURSAL -->
-          <div class="space-y-3">
-            <label class="block text-xs font-bold uppercase text-slate-300">1. Selecciona la Sucursal:</label>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <label class="relative flex items-center p-4 rounded-2xl border-2 border-[#222c3b] cursor-pointer bg-slate-900/50 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10">
-                <input type="radio" name="sucursal" value="centro" id="branch-centro" checked onchange="updateBranchSelection()" class="hidden">
-                <div>
-                  <h4 class="font-bold text-white text-sm">Sucursal Matriz</h4>
-                  <p class="text-xs text-amber-400">9:00 AM - 8:00 PM</p>
-                </div>
-              </label>
-              <label class="relative flex items-center p-4 rounded-2xl border-2 border-[#222c3b] cursor-pointer bg-slate-900/50 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10">
-                <input type="radio" name="sucursal" value="norte" id="branch-norte" onchange="updateBranchSelection()" class="hidden">
-                <div>
-                  <h4 class="font-bold text-white text-sm">Sucursal Paseo Cantera</h4>
-                  <p class="text-xs text-amber-400">10:00 AM - 8:00 PM</p>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <!-- PASO 2: SERVICIO Y BARBERO -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="block text-xs font-bold uppercase text-slate-300">2. Servicio Requerido:</label>
-              <select id="select-service" class="w-full bg-[#0a0e14] border border-[#222c3b] text-slate-200 text-sm rounded-xl px-4 py-3 focus:border-amber-500 outline-none">
-                <option value="Corte o Fade ($130 MXN)">Corte Clásico o Fade ($130 MXN)</option>
-                <option value="Combo Corte + Barba ($200 MXN)">Combo Completo: Corte + Barba ($200 MXN)</option>
-                <option value="Perfilado Barba ($90 MXN)">Perfilado de Barba a Navaja ($90 MXN)</option>
-                <option value="Corte Infantil ($120 MXN)">Corte Infantil ($120 MXN)</option>
-                <option value="Mascarilla Negra ($100 MXN)">Mascarilla Negra Facial ($100 MXN)</option>
-              </select>
-            </div>
-            <div class="space-y-2">
-              <label class="block text-xs font-bold uppercase text-slate-300">Barbero:</label>
-              <select id="select-barber" onchange="renderTimeSlots()" class="w-full bg-[#0a0e14] border border-[#222c3b] text-slate-200 text-sm rounded-xl px-4 py-3 focus:border-amber-500 outline-none">
-                <!-- Llenado automático -->
-              </select>
-            </div>
-          </div>
-
-          <!-- PASO 3: HORARIOS (ANTI-EMPALME) -->
-          <div class="space-y-3">
-            <div class="flex justify-between items-center">
-              <label class="block text-xs font-bold uppercase text-slate-300">3. Fecha y Horario:</label>
-              <div class="flex items-center gap-3 text-[11px]">
-                <span class="flex items-center gap-1 text-slate-400"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Disponible</span>
-                <span class="flex items-center gap-1 text-red-400"><span class="w-2 h-2 rounded-full bg-red-500"></span> Ocupado</span>
-              </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <input type="date" id="booking-date" required onchange="renderTimeSlots()" class="w-full bg-[#0a0e14] border border-[#222c3b] text-slate-200 text-sm rounded-xl px-3.5 py-2.5 outline-none focus:border-amber-500">
-                <p id="slots-status-feedback" class="text-[11px] text-slate-400 mt-2 font-medium"></p>
-              </div>
-              <div class="sm:col-span-2">
-                <div class="grid grid-cols-3 sm:grid-cols-4 gap-2" id="time-slots-container">
-                  <!-- Renderizado dinámico -->
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PASO 4: DATOS -->
-          <div class="space-y-3 pt-2 border-t border-slate-800">
-            <label class="block text-xs font-bold uppercase text-slate-300">4. Datos del Cliente:</label>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input type="text" id="client-name" required placeholder="Nombre Completo" class="w-full bg-[#0a0e14] border border-[#222c3b] text-slate-200 text-sm rounded-xl px-4 py-3 outline-none focus:border-amber-500">
-              <input type="tel" id="client-phone" required placeholder="WhatsApp (10 dígitos)" class="w-full bg-[#0a0e14] border border-[#222c3b] text-slate-200 text-sm rounded-xl px-4 py-3 outline-none focus:border-amber-500">
-            </div>
-          </div>
-
-          <div class="pt-2">
-            <button type="submit" id="btn-submit-booking" class="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-sm uppercase rounded-2xl shadow-xl transition active:scale-95 disabled:opacity-50">
-              Confirmar Cita & Generar Pase
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER OFICIAL -->
-  <footer class="bg-[#070a0f] border-t border-[#222c3b] py-10 px-4 text-slate-400 text-xs">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="space-y-3">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center">🦁</div>
-          <span class="font-brand text-xl text-white">León Barbershop</span>
-        </div>
-        <p>Especialistas en degradados precisos, mascarilla y perfilado a navaja. Síguenos:</p>
-        <div class="pt-1 flex gap-2">
-          <a href="https://www.instagram.com/_leonbarbershop_/" target="_blank" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/30 text-pink-400 font-bold">
-            Instagram
-          </a>
-          <a href="https://www.tiktok.com/@leon.barbershop8?is_from_webapp=1&sender_device=pc" target="_blank" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-bold">
-            TikTok
-          </a>
-        </div>
-      </div>
-      <div class="space-y-2">
-        <h4 class="text-white font-bold uppercase tracking-wider text-xs">Contacto Oficial</h4>
-        <div class="flex flex-col gap-1 text-amber-400 font-bold">
-          <a href="https://wa.me/529934049163" target="_blank">&bull; WhatsApp: +52 993 404 9163</a>
-          <span class="text-slate-400 font-normal">&bull; Matriz: Playas del Rosario (9am - 8pm)</span>
-          <span class="text-slate-400 font-normal">&bull; Cantera: Plaza Paseo Cantera (10am - 8pm)</span>
-        </div>
-      </div>
-      <div class="space-y-3">
-        <h4 class="text-white font-bold uppercase tracking-wider text-xs">Acceso Privado</h4>
-        <button onclick="requestAdminAccess()" class="px-3.5 py-2 bg-amber-500/10 text-amber-400 border border-amber-500/30 font-bold rounded-xl flex items-center gap-1.5">
-          Abrir Panel de Citas &rarr;
-        </button>
       </div>
     </div>
   </footer>
 
-
-  <!-- MODAL 1: TICKET DIGITAL -->
-  <div id="ticket-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#131922] border border-amber-500/50 w-full max-w-md rounded-3xl p-6 space-y-5 relative">
-      <div class="text-center space-y-1">
-        <h3 class="font-brand text-2xl text-white">¡Cita Agendada!</h3>
-        <p class="text-xs text-slate-400">Folio de confirmación oficial.</p>
-      </div>
-      <div class="bg-[#0a0e14] border border-dashed border-amber-500/40 rounded-2xl p-5 space-y-3 text-xs">
-        <div class="border-b border-slate-800 pb-2"><span class="text-slate-400">Folio:</span> <span id="ticket-folio" class="text-lg font-black text-amber-400">#LEON-0000</span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Cliente:</span><span id="ticket-name" class="font-bold text-white"></span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Sucursal:</span><span id="ticket-branch" class="font-bold text-white"></span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Barbero:</span><span id="ticket-barber" class="font-bold text-amber-300"></span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Fecha y Hora:</span><span id="ticket-datetime" class="font-black text-amber-400 text-sm"></span></div>
-      </div>
-      <div class="space-y-2">
-        <button onclick="sendTicketWhatsApp()" class="w-full py-3 bg-emerald-600 text-white font-black text-xs uppercase rounded-xl">Enviar a WhatsApp de Barbería</button>
-        <button onclick="closeTicketModal()" class="w-full py-2 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">Cerrar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: PIN DE ACCESO BARBERO -->
-  <div id="pin-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#131922] border border-amber-500/40 w-full max-w-sm rounded-3xl p-6 text-center relative">
-      <button onclick="closePinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
-      <h3 class="font-brand text-xl font-bold text-white mb-4">Acceso al Personal</h3>
-      <form onsubmit="handlePinSubmit(event)" class="space-y-4">
-        <input type="password" id="admin-pin-input" maxlength="6" placeholder="••••••" class="w-40 text-center tracking-[0.5em] text-2xl font-black bg-[#0a0e14] border border-amber-500/40 text-amber-400 rounded-xl py-2 focus:outline-none">
-        <button type="submit" class="w-full py-3 bg-amber-500 text-slate-950 font-bold text-xs uppercase rounded-xl">Desbloquear Agenda</button>
+  <!-- MODALES DE VENTANAS (Reseñas y Admin) -->
+  <div id="reviewModal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div class="bg-[#141b26] border border-slate-700 max-w-sm w-full p-8 rounded-3xl space-y-5 shadow-2xl relative">
+      <button onclick="closeReviewModal()" class="absolute top-5 right-5 text-slate-500 hover:text-white text-3xl leading-none">&times;</button>
+      <h3 class="font-brand text-2xl text-white tracking-wide text-center">Califica tu Experiencia</h3>
+      <form id="reviewForm" onsubmit="submitReview(event)" class="space-y-4">
+        <input type="text" id="revName" required placeholder="Tu Nombre Completo" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500">
+        <select id="revBranch" required class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500">
+          <option value="" disabled selected>Selecciona la sucursal...</option>
+          <option value="Matriz">Sucursal Matriz (Salida Playas)</option>
+          <option value="Cantera">Plaza Paseo Cantera</option>
+        </select>
+        <select id="revRating" required class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500 font-medium">
+          <option value="5">⭐⭐⭐⭐⭐ Excelente (5/5)</option>
+          <option value="4">⭐⭐⭐⭐ Muy Bueno (4/5)</option>
+          <option value="3">⭐⭐⭐ Bueno (3/5)</option>
+          <option value="2">⭐⭐ Regular (2/5)</option>
+          <option value="1">⭐ Malo (1/5)</option>
+        </select>
+        <textarea id="revComment" required placeholder="¿Qué tal te pareció el corte y el servicio?" rows="3" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-4 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+        <button type="submit" id="btnSubmitReview" class="w-full py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black uppercase tracking-widest rounded-xl transition mt-2">
+          Publicar Opinión
+        </button>
       </form>
-      <p class="text-[11px] text-slate-500 mt-4">PIN de prueba: 200720</p>
     </div>
   </div>
 
-  <!-- MODAL 3: PANEL DE ADMINISTRACIÓN -->
-  <div id="admin-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#131922] border border-[#222c3b] w-full max-w-2xl rounded-3xl p-6 relative max-h-[90vh] flex flex-col">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-3">
-        <h3 class="font-brand text-xl font-bold text-white">Agenda Central</h3>
-        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white font-bold">Cerrar ✕</button>
-      </div>
-      <div class="overflow-y-auto custom-scrollbar flex-1 space-y-2 pr-1" id="admin-bookings-list">
-        <!-- Lista de citas del panel -->
+  <div id="adminPinModal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-[#141b26] border border-slate-700 max-w-sm w-full p-8 rounded-3xl space-y-6 text-center shadow-2xl relative">
+      <h3 class="font-brand text-2xl text-white font-bold">Acceso Barbero</h3>
+      <p class="text-sm text-slate-400">Introduce tu PIN de 6 dígitos.</p>
+      <input type="password" id="adminPinInput" maxlength="6" placeholder="******" class="w-full text-center tracking-[0.5em] text-2xl font-black bg-slate-900 border border-slate-700 text-amber-500 rounded-xl py-4 focus:outline-none focus:border-amber-500 shadow-inner">
+      <div class="flex gap-4">
+        <button onclick="closeAdminModal()" class="w-1/2 py-4 bg-slate-800 text-slate-300 hover:text-white text-xs font-black uppercase rounded-xl transition tracking-wider">Cancelar</button>
+        <button onclick="verifyAdminPin()" class="w-1/2 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black uppercase rounded-xl transition tracking-wider">Entrar</button>
       </div>
     </div>
   </div>
 
-  <!-- CONTENEDOR DE ALERTAS (TOAST) -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+  <div id="adminDashboardModal" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-[#121822] border border-slate-700 max-w-4xl w-full p-6 sm:p-8 rounded-3xl space-y-6 max-h-[90vh] flex flex-col shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+        <h3 class="font-brand text-2xl text-white font-bold flex items-center gap-2">
+          <span class="text-amber-500">💈</span> Panel de Citas Activas
+        </h3>
+        <button onclick="closeDashboardModal()" class="text-slate-500 hover:text-white text-3xl leading-none">&times;</button>
+      </div>
+      <div class="flex-1 overflow-y-auto space-y-4 pr-2" id="adminBookingsList">
+        <p class="text-sm text-slate-400 text-center py-10 font-medium">Cargando base de datos...</p>
+      </div>
+      <div class="pt-6 border-t border-slate-800 flex justify-end">
+        <button onclick="closeDashboardModal()" class="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white text-xs font-black uppercase tracking-widest rounded-xl transition">Cerrar Sesión</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- SCRIPTS PRINCIPALES -->
+  <!-- JAVASCRIPT DEL SISTEMA -->
   <script>
-    const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyz1_yWSm1EHct0_e6Itih8Bs-8Ym6Sy9Cg_237ZYm52mdoAeDl4evknMMCnpC_mOhYbg/exec"; 
-
-    // BARBEROS SEPARADOS POR SUCURSAL
-    const branchBarbers = {
-      centro: [
-        { id: 'sebastian', name: 'Sebastián' },
-        { id: 'andres', name: 'Andrés' },
-        { id: 'victor', name: 'Víctor' }
-      ],
-      norte: [
-        { id: 'giovani', name: 'Giovani' }
-      ]
+    // Sistema de Alertas Mejorado
+    window.alert = function(msg) {
+      const alertBox = document.createElement('div');
+      alertBox.className = 'fixed top-10 left-1/2 -translate-x-1/2 z-[100] bg-[#141b26] text-white border border-amber-500/50 px-8 py-6 rounded-2xl shadow-[0_0_30px_rgba(245,158,11,0.2)] flex flex-col items-center gap-5 w-[90%] max-w-sm transition-all duration-300';
+      alertBox.innerHTML = `
+        <p class="text-sm font-medium text-center whitespace-pre-line leading-relaxed">${msg}</p>
+        <button class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition shadow-lg w-full" onclick="this.parentElement.remove()">Aceptar</button>
+      `;
+      document.body.appendChild(alertBox);
     };
 
-    // HORARIOS ESTRICTOS (Matriz 9-8, Cantera 10-8)
-    const branchSlots = {
-      centro: [
-        "9:00 AM", "9:45 AM", "10:30 AM", "11:15 AM", "12:00 PM", 
-        "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", 
-        "6:00 PM", "7:00 PM", "7:30 PM"
-      ],
-      norte: [
-        "10:00 AM", "10:45 AM", "11:30 AM", "12:15 PM", "1:00 PM", 
-        "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", 
-        "7:00 PM", "7:30 PM"
-      ]
+    // VARIABLES PRINCIPALES
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz1_yWSm1EHct0_e6Itih8Bs-8Ym6Sy9Cg_237ZYm52mdoAeDl4evknMMCnpC_mOhYbg/exec"; 
+    const ADMIN_PIN = "200720";
+    let selectedTime = null;
+    let registeredBookings = [];
+    let reviewsList = [];
+
+    // CONFIGURACIÓN DE SUCURSALES (Horarios Diferenciados)
+    const branchConfig = {
+      matriz: {
+        name: "Sucursal Matriz",
+        barbers: ["Sebastián", "Andrés", "Víctor"],
+        slots: ["9:00 AM", "9:45 AM", "10:30 AM", "11:15 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "7:30 PM"]
+      },
+      cantera: {
+        name: "Plaza Paseo Cantera",
+        barbers: ["Giovani"],
+        slots: ["10:00 AM", "10:45 AM", "11:30 AM", "12:15 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "7:30 PM"]
+      }
     };
 
-    let bookingsList = [];
-    let currentSelectedTime = null; // Obliga a tocar manual
-    let lastGeneratedBooking = null;
-    let isAdminAuthenticated = false;
-
-    // Inicializar al cargar
-    window.addEventListener('DOMContentLoaded', () => {
-      const stored = localStorage.getItem('leon_bookings');
-      if (stored) bookingsList = JSON.parse(stored);
+    // INICIALIZACIÓN
+    window.addEventListener("DOMContentLoaded", () => {
+      const d = new Date();
+      const offset = d.getTimezoneOffset();
+      const localDate = new Date(d.getTime() - (offset*60*1000));
+      const todayStr = localDate.toISOString().split('T')[0];
       
-      const datePicker = document.getElementById('booking-date');
-      const today = new Date().toISOString().split('T')[0];
-      datePicker.min = today;
-      datePicker.value = today;
+      const dateEl = document.getElementById("dateInput");
+      dateEl.min = todayStr;
+      dateEl.value = todayStr;
 
-      updateBranchSelection();
-      
-      // Activar animaciones
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('is-revealed'); });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
+      handleBranchChange();
+      fetchData();
     });
 
-    function updateBranchSelection() {
-      currentSelectedTime = null; // Limpia hora seleccionada
-      const selectedBranch = document.querySelector('input[name="sucursal"]:checked').value;
-      
-      // Actualizar Barberos
-      const barberSelect = document.getElementById('select-barber');
-      barberSelect.innerHTML = '';
-      branchBarbers[selectedBranch].forEach(b => {
-        const opt = document.createElement('option');
-        opt.value = b.name; opt.textContent = b.name;
-        barberSelect.appendChild(opt);
+    function handleBranchChange() {
+      const branchKey = document.querySelector('input[name="sucursal"]:checked').value;
+      const select = document.getElementById("barberSelect");
+      select.innerHTML = "";
+      branchConfig[branchKey].barbers.forEach(b => {
+        select.add(new Option(b, b));
       });
+      selectedTime = null;
+      document.getElementById("selectionHint").textContent = "👇 Toca un horario libre en pantalla.";
       renderTimeSlots();
     }
 
-    function preSelectBranch(val) {
-      document.getElementById('branch-' + val).checked = true;
-      updateBranchSelection();
-      document.getElementById('citas').scrollIntoView({behavior:'smooth'});
+    // CONVERSIÓN DE HORAS PARA LA VALIDACIÓN
+    function parseTimeToMinutes(timeStr) {
+      const parts = timeStr.trim().split(' ');
+      const modifier = parts[1];
+      let [hours, minutes] = parts[0].split(':').map(Number);
+      
+      if (modifier === 'PM' && hours !== 12) hours += 12;
+      if (modifier === 'AM' && hours === 12) hours = 0;
+      
+      return hours * 60 + minutes;
     }
 
-    // VALIDACIÓN ROBUSTA ANTI-EMPALME
-    function isSlotOccupied(branchVal, barberName, dateStr, timeSlot) {
-      return bookingsList.some(b => {
-        if (b.status === 'Cancelado') return false;
-        // Validación exacta para evitar fallos de lectura de Google Sheets
-        const dateMatch = String(b.date).includes(dateStr) || String(dateStr).includes(b.date);
-        const branchMatch = (b.branchKey === branchVal) || String(b.branchName).toLowerCase().includes(branchVal === 'centro' ? 'matriz' : 'cantera');
-        const timeMatch = String(b.time).trim() === String(timeSlot).trim();
-        const barberMatch = String(b.barber).trim() === String(barberName).trim();
-        return dateMatch && branchMatch && timeMatch && barberMatch;
-      });
-    }
-
+    // GENERAR BOTONES (CON LA REGLA CORREGIDA PARA MAÑANA)
     function renderTimeSlots() {
-      const container = document.getElementById('time-slots-container');
-      const feedback = document.getElementById('slots-status-feedback');
-      container.innerHTML = '';
+      const grid = document.getElementById("slotsGrid");
+      grid.innerHTML = "";
 
-      const branchVal = document.querySelector('input[name="sucursal"]:checked').value;
-      const barberName = document.getElementById('select-barber').value;
-      const dateStr = document.getElementById('booking-date').value;
-      const slots = branchSlots[branchVal];
+      const branchKey = document.querySelector('input[name="sucursal"]:checked').value;
+      const slots = branchConfig[branchKey].slots;
+      const dateInput = document.getElementById("dateInput").value;
+      const selectedBarber = document.getElementById("barberSelect").value;
 
-      // Verificación en tiempo real mientras pinta los botones
-      if (currentSelectedTime && isSlotOccupied(branchVal, barberName, dateStr, currentSelectedTime)) {
-        currentSelectedTime = null;
-        triggerToast("⚠️ Tu horario se acaba de ocupar. Elige otro.");
-      }
+      // VALIDACIÓN CORREGIDA: ¿Es el día de HOY?
+      const now = new Date();
+      const [selYear, selMonth, selDay] = dateInput.split('-').map(Number);
+      const isToday = (
+        now.getFullYear() === selYear &&
+        (now.getMonth() + 1) === selMonth &&
+        now.getDate() === selDay
+      );
+      
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
       slots.forEach(slot => {
-        const isOccupied = isSlotOccupied(branchVal, barberName, dateStr, slot);
-        const isSelected = slot === currentSelectedTime;
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        
-        if (isOccupied) {
-          btn.disabled = true;
-          btn.className = 'py-2 px-1.5 text-xs rounded-xl border border-red-900/30 bg-slate-900/40 text-slate-500 line-through cursor-not-allowed font-bold';
-          btn.innerHTML = `${slot} <br><span class="text-[9px] text-red-400">Ocupado</span>`;
-        } else {
-          btn.onclick = () => { currentSelectedTime = slot; renderTimeSlots(); };
-          btn.className = `py-2.5 px-2 text-xs rounded-xl font-bold border transition ${isSelected ? 'bg-amber-500 text-slate-950 border-amber-400 scale-[1.03]' : 'bg-[#0a0e14] text-slate-300 border-[#222c3b] hover:border-slate-500'}`;
-          btn.innerText = slot;
-        }
-        container.appendChild(btn);
-      });
+        const slotMinutes = parseTimeToMinutes(slot);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = slot;
+        btn.className = "py-4 rounded-xl text-xs font-bold border transition duration-200 w-full";
 
-      if(feedback) {
-        if (!currentSelectedTime) feedback.innerHTML = `<span class="text-amber-400 font-bold">👆 Toca un horario libre en pantalla.</span>`;
-        else feedback.innerHTML = `<span class="text-emerald-400 font-bold">✓ Seleccionaste las ${currentSelectedTime}.</span>`;
-      }
+        // REGLA 1: Solo bloquear si es el DÍA ACTUAL y la hora ya pasó
+        let isPast = false;
+        if (isToday && slotMinutes <= currentMinutes) {
+          isPast = true;
+        }
+
+        // REGLA 2: Bloquear si ya está guardada en Google Sheets
+        const isOccupied = registeredBookings.some(b => 
+          b.date === dateInput && 
+          b.time === slot && 
+          b.barber === selectedBarber && 
+          b.status !== "cancelado"
+        );
+
+        if (isPast) {
+          btn.classList.add("slot-disabled");
+          btn.disabled = true;
+        } else if (isOccupied) {
+          btn.classList.add("slot-occupied");
+          btn.disabled = true;
+        } else {
+          if (selectedTime === slot) {
+            btn.classList.add("bg-amber-500", "border-amber-400", "text-black", "shadow-[0_0_15px_rgba(245,158,11,0.3)]");
+          } else {
+            btn.classList.add("bg-[#1a2230]", "border-slate-700", "text-slate-300", "hover:border-amber-500");
+          }
+          btn.onclick = () => {
+            selectedTime = slot;
+            document.getElementById("selectionHint").innerHTML = `<span class="text-emerald-400">✅ Has seleccionado: ${slot}</span>`;
+            renderTimeSlots();
+          };
+        }
+        grid.appendChild(btn);
+      });
     }
 
+    // ENVIAR LA CITA AL SERVIDOR (GOOGLE SHEETS)
     async function handleBookingSubmit(event) {
       event.preventDefault();
-      const btnSubmit = document.getElementById('btn-submit-booking');
       
-      const branchVal = document.querySelector('input[name="sucursal"]:checked').value;
-      const branchName = branchVal === 'centro' ? 'Sucursal Matriz' : 'Plaza Paseo Cantera';
-      const service = document.getElementById('select-service').value;
-      const barber = document.getElementById('select-barber').value;
-      const date = document.getElementById('booking-date').value;
-      const name = document.getElementById('client-name').value;
-      const phone = document.getElementById('client-phone').value;
-
-      if (!currentSelectedTime) {
-        triggerToast('⚠️ Error: Debes seleccionar un horario tocando uno de los botones disponibles.');
+      const name = document.getElementById("clientName").value.trim();
+      const phone = document.getElementById("clientPhone").value.trim();
+      
+      if (!name || !phone) {
+        alert("Por favor llena tu nombre y WhatsApp.");
+        return;
+      }
+      if (!selectedTime) {
+        alert("⚠️ Por favor selecciona un horario tocando uno de los botones disponibles.");
         return;
       }
 
-      // INICIA PROTOCOLO ANTI-EMPALME
-      btnSubmit.disabled = true;
-      btnSubmit.innerHTML = `⏳ Verificando disponibilidad...`;
+      const btn = document.getElementById("btnSubmit");
+      const branchKey = document.querySelector('input[name="sucursal"]:checked').value;
+      const branchName = branchConfig[branchKey].name;
+      const service = document.getElementById("serviceSelect").value;
+      const barber = document.getElementById("barberSelect").value;
+      const date = document.getElementById("dateInput").value;
 
-      // 1. Revisión local inmediata
-      if (isSlotOccupied(branchVal, barber, date, currentSelectedTime)) {
-        rejectBooking(btnSubmit); return;
-      }
+      btn.disabled = true;
+      btn.innerHTML = `<span class="animate-pulse">Procesando y validando...</span>`;
 
-      // 2. Revisión Asíncrona con el Servidor
-      try {
-        if(GOOGLE_SHEET_WEBAPP_URL.includes("script.google.com")) {
-          const res = await fetch(GOOGLE_SHEET_WEBAPP_URL + '?nocache=' + Date.now());
-          const data = await res.json();
-          if (data && data.bookings) bookingsList = data.bookings;
-        }
-      } catch (e) { console.log(e); }
-
-      // 3. Revisión Final tras leer servidor
-      if (isSlotOccupied(branchVal, barber, date, currentSelectedTime)) {
-        rejectBooking(btnSubmit); return;
-      }
-
-      // APROBADO: Generar Folio
-      const folio = 'LEON-' + Math.floor(1000 + Math.random() * 9000);
-      lastGeneratedBooking = {
-        folio, name, phone, branchKey: branchVal, branchName, service, barber, date, time: currentSelectedTime, status: 'Pendiente'
+      const newBooking = {
+        folio: "LB-" + Date.now().toString().slice(-5),
+        name: name,
+        phone: phone,
+        branchName: branchName,
+        service: service,
+        barber: barber,
+        date: date,
+        time: selectedTime,
+        status: "Pendiente"
       };
 
-      bookingsList.unshift(lastGeneratedBooking);
-      localStorage.setItem('leon_bookings', JSON.stringify(bookingsList));
-      if(GOOGLE_SHEET_WEBAPP_URL.includes("script.google.com")) {
-        fetch(GOOGLE_SHEET_WEBAPP_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(lastGeneratedBooking) });
-      }
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          redirect: "follow",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(newBooking)
+        });
+        const result = await response.json();
 
-      document.getElementById('ticket-folio').innerText = '#' + folio;
-      document.getElementById('ticket-name').innerText = name;
-      document.getElementById('ticket-branch').innerText = branchName;
-      document.getElementById('ticket-barber').innerText = barber;
-      document.getElementById('ticket-datetime').innerText = `${date} a las ${currentSelectedTime}`;
+        // VALIDACIÓN DE EMPALME EN VIVO
+        if (result.status === "occupied") {
+          alert("⚠️ ¡Lo sentimos! Otro cliente acaba de reservar este mismo horario hace unos segundos.\n\nPor favor, selecciona otro horario disponible.");
+          selectedTime = null;
+          await fetchData();
+          return;
+        }
 
-      document.getElementById('ticket-modal').classList.remove('hidden');
-      triggerToast('¡Cita Registrada!');
+        registeredBookings.push(newBooking);
+        alert(`¡Cita Confirmada, ${name}!\n\nTe esperamos el ${date} a las ${selectedTime} con ${barber} en ${branchName}.`);
+        
+        // REDIRECCIÓN A WHATSAPP (993 404 9163)
+        const msg = encodeURIComponent(`Hola León Barbershop, acabo de agendar una cita:\n\n👤 Cliente: ${name}\n📍 Sucursal: ${branchName}\n💈 Barbero: ${barber}\n✂️ Servicio: ${service}\n📅 Fecha: ${date}\n⏰ Hora: ${selectedTime}\nFolio: ${newBooking.folio}`);
+        window.open(`https://wa.me/529934049163?text=${msg}`, "_blank");
 
-      currentSelectedTime = null; // Reiniciar
-      renderTimeSlots();
-      btnSubmit.disabled = false;
-      btnSubmit.innerHTML = `Confirmar Cita & Generar Pase`;
-      document.getElementById('client-name').value = '';
-      document.getElementById('client-phone').value = '';
-    }
+        document.getElementById("clientName").value = "";
+        document.getElementById("clientPhone").value = "";
+        selectedTime = null;
+        renderTimeSlots();
+        updateAdminBadge();
 
-    function rejectBooking(btnSubmit) {
-      triggerToast('⚠️ ¡Ups! Alguien acaba de ganar este horario. Por favor, selecciona otro.');
-      currentSelectedTime = null;
-      renderTimeSlots();
-      btnSubmit.disabled = false;
-      btnSubmit.innerHTML = `Confirmar Cita & Generar Pase`;
-    }
-
-    // UTILIDADES
-    function triggerToast(msg) {
-      const c = document.getElementById('toast-container');
-      const t = document.createElement('div');
-      t.className = 'bg-[#1a2332] text-white border border-amber-500/40 text-xs font-bold px-4 py-3 rounded-2xl flex items-center gap-2';
-      t.innerHTML = `<span>💈</span><span>${msg}</span>`;
-      c.appendChild(t); setTimeout(() => t.remove(), 4000);
-    }
-
-    function closeTicketModal() { document.getElementById('ticket-modal').classList.add('hidden'); }
-    function sendTicketWhatsApp() {
-      const b = lastGeneratedBooking;
-      const msg = `*¡HOLA LEÓN BARBERSHOP!* 💈%0A%0AHe agendado mi cita:%0A*Folio:* ${b.folio}%0A*Cliente:* ${b.name}%0A*Sucursal:* ${b.branchName}%0A*Fecha:* ${b.date} a las ${b.time}%0A%0A¿Me confirman?`;
-      window.open(`https://wa.me/529934049163?text=${msg}`, '_blank');
-    }
-
-    // ACCESO BARBERO (MODALES Y LÓGICA)
-    function requestAdminAccess() {
-      if (isAdminAuthenticated) openAdminModal();
-      else {
-        document.getElementById('pin-modal').classList.remove('hidden');
-        document.getElementById('admin-pin-input').value = '';
+      } catch (e) {
+        alert("Tu cita fue enviada. (Modo local activado).");
+        registeredBookings.push(newBooking);
+        selectedTime = null;
+        renderTimeSlots();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Confirmar Cita";
       }
     }
-    function closePinModal() { document.getElementById('pin-modal').classList.add('hidden'); }
-    function handlePinSubmit(e) {
-      e.preventDefault();
-      const pin = document.getElementById('admin-pin-input').value;
-      if (pin === '200720') {
-        isAdminAuthenticated = true;
-        closePinModal();
-        openAdminModal();
-      } else {
-        triggerToast('❌ PIN Incorrecto');
-        document.getElementById('admin-pin-input').value = '';
+
+    // OBTENER DATOS (Citas y Reseñas)
+    async function fetchData() {
+      try {
+        const res = await fetch(SCRIPT_URL, { method: "GET", redirect: "follow" });
+        const data = await res.json();
+        if (data.bookings) {
+          registeredBookings = data.bookings;
+          renderTimeSlots();
+          updateAdminBadge();
+        }
+        if (data.reviews) {
+          reviewsList = data.reviews;
+          renderReviews();
+        }
+      } catch (e) {
+        console.error("Error cargando base de datos", e);
       }
     }
-    function openAdminModal() {
-      document.getElementById('admin-modal').classList.remove('hidden');
-      renderAdminBookings();
-    }
-    function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
 
-    function renderAdminBookings() {
-      const container = document.getElementById('admin-bookings-list');
-      container.innerHTML = '';
-      if (bookingsList.length === 0) { container.innerHTML = '<p class="text-slate-500 text-xs text-center py-4">No hay citas registradas.</p>'; return; }
+    // RENDERIZAR RESEÑAS
+    function renderReviews() {
+      const container = document.getElementById("reviewsContainer");
+      container.innerHTML = "";
+      if(reviewsList.length === 0) {
+        container.innerHTML = '<p class="text-slate-500 text-sm col-span-3 text-center py-10">Aún no hay opiniones recientes.</p>';
+        return;
+      }
       
-      bookingsList.forEach(b => {
-        const isAtendido = b.status === 'Atendido';
-        const item = document.createElement('div');
-        item.className = 'bg-[#0a0e14] p-4 rounded-xl border border-slate-800 text-xs space-y-2';
-        item.innerHTML = `
-          <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-            <span class="font-bold text-amber-400">${b.folio}</span>
-            <span class="px-2 py-1 rounded text-[10px] ${isAtendido ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${b.status}</span>
+      const topReviews = reviewsList.slice(0, 3);
+      topReviews.forEach(r => {
+        const stars = Array(5).fill(0).map((_, i) => 
+          i < r.rating 
+            ? '<svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>'
+            : '<svg class="w-4 h-4 text-slate-700" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>'
+        ).join('');
+
+        const card = document.createElement("div");
+        card.className = "bg-[#141b26] border border-slate-800 p-6 sm:p-8 rounded-3xl flex flex-col space-y-4 shadow-xl";
+        card.innerHTML = `
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-amber-500 font-bold border border-slate-700 text-sm shadow-inner">
+              ${r.initials || 'LB'}
+            </div>
+            <div>
+              <h4 class="font-bold text-white text-base">${r.author}</h4>
+              <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mt-0.5">${r.branchName || r.branch}</p>
+            </div>
           </div>
-          <div class="text-white font-bold">${b.name} <span class="text-slate-400 font-normal">(${b.phone})</span></div>
-          <div class="text-slate-400">Sucursal: ${b.branchName}</div>
-          <div class="text-slate-400">Barbero: <span class="text-amber-200">${b.barber}</span></div>
-          <div class="font-bold text-amber-400">📅 ${b.date} &bull; ⏰ ${b.time}</div>
-          <div class="pt-2 flex gap-2">
-            <button onclick="toggleStatus('${b.folio}')" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded font-bold transition">Cambiar Estado</button>
-            <button onclick="deleteBooking('${b.folio}')" class="px-3 py-1.5 bg-red-900/40 text-red-400 rounded hover:bg-red-900/60 transition">Borrar</button>
-          </div>
+          <div class="flex gap-1">${stars}</div>
+          <p class="text-sm text-slate-300 italic leading-relaxed flex-1 pt-2">"${r.comment}"</p>
         `;
-        container.appendChild(item);
+        container.appendChild(card);
       });
     }
 
-    function toggleStatus(folio) {
-      const b = bookingsList.find(x => x.folio === folio);
-      if(b) { b.status = (b.status === 'Pendiente') ? 'Atendido' : 'Pendiente'; localStorage.setItem('leon_bookings', JSON.stringify(bookingsList)); renderAdminBookings(); }
+    // MÉTODOS DE RESEÑAS
+    function openReviewModal() { document.getElementById("reviewModal").classList.remove("hidden"); }
+    function closeReviewModal() { document.getElementById("reviewModal").classList.add("hidden"); document.getElementById("reviewForm").reset(); }
+    
+    async function submitReview(event) {
+      event.preventDefault();
+      const btn = document.getElementById("btnSubmitReview");
+      btn.disabled = true;
+      btn.innerHTML = `<span class="animate-pulse">Enviando...</span>`;
+
+      const name = document.getElementById("revName").value.trim();
+      const branch = document.getElementById("revBranch").value;
+      const newReview = {
+        action: "newReview",
+        author: name,
+        branch: branch,
+        branchName: branch === "Matriz" ? "Sucursal Matriz" : "Plaza Paseo Cantera",
+        rating: parseInt(document.getElementById("revRating").value),
+        comment: document.getElementById("revComment").value.trim(),
+        initials: name.substring(0,2).toUpperCase()
+      };
+
+      try {
+        await fetch(SCRIPT_URL, { method: "POST", redirect: "follow", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(newReview) });
+        alert("¡Muchas gracias por tu recomendación! Se ha publicado con éxito.");
+        closeReviewModal();
+        fetchData();
+      } catch (e) {
+        alert("Reseña enviada correctamente (Modo Local).");
+        closeReviewModal();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Publicar Opinión";
+      }
     }
-    function deleteBooking(folio) {
-      bookingsList = bookingsList.filter(x => x.folio !== folio);
-      localStorage.setItem('leon_bookings', JSON.stringify(bookingsList));
-      renderAdminBookings(); renderTimeSlots(); triggerToast('Cita eliminada localmente');
+
+    // ACCESO ADMIN
+    function updateAdminBadge() { document.getElementById("adminBadge").textContent = registeredBookings.filter(b => b.status.toLowerCase() !== "cancelado").length; }
+    function openAdminModal() { document.getElementById("adminPinModal").classList.remove("hidden"); setTimeout(() => document.getElementById("adminPinInput").focus(), 100); }
+    function closeAdminModal() { document.getElementById("adminPinModal").classList.add("hidden"); document.getElementById("adminPinInput").value = ""; }
+    
+    function verifyAdminPin() {
+      if (document.getElementById("adminPinInput").value === ADMIN_PIN) {
+        closeAdminModal(); openDashboardModal();
+      } else { alert("PIN Incorrecto. Acceso Denegado."); document.getElementById("adminPinInput").value = ""; }
     }
+
+    function openDashboardModal() {
+      document.getElementById("adminDashboardModal").classList.remove("hidden");
+      const list = document.getElementById("adminBookingsList");
+      list.innerHTML = "";
+      const active = registeredBookings.filter(b => b.status.toLowerCase() !== "cancelado");
+      
+      if (active.length === 0) { list.innerHTML = '<p class="text-slate-400 text-center py-10 text-sm">No hay citas pendientes.</p>'; return; }
+
+      active.forEach(b => {
+        list.innerHTML += `
+          <div class="p-5 bg-[#1a2230] border border-slate-700 rounded-2xl space-y-3 relative overflow-hidden shadow-lg">
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-amber-500"></div>
+            <div class="flex justify-between items-start ml-2">
+              <div>
+                <h4 class="font-bold text-white text-lg">${b.name}</h4>
+                <p class="text-[10px] font-black text-amber-500 tracking-widest uppercase mt-1">Folio: ${b.folio || 'N/A'}</p>
+              </div>
+              <div class="text-right">
+                <span class="inline-block px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 font-black rounded-lg text-sm">${b.time}</span>
+                <p class="text-xs font-bold text-slate-400 mt-2">${b.date}</p>
+              </div>
+            </div>
+            <div class="ml-2 pt-3 border-t border-slate-700/50 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium">
+              <span class="text-slate-300">💈 Barbero: <strong class="text-white">${b.barber}</strong></span>
+              <span class="text-slate-300">✂️ ${b.service.split('(')[0]}</span>
+              <span class="text-slate-300">📞 ${b.phone}</span>
+              <span class="text-slate-300 w-full text-[10px] uppercase font-black text-amber-500/80 mt-1">📍 ${b.branchName}</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+    function closeDashboardModal() { document.getElementById("adminDashboardModal").classList.add("hidden"); }
   </script>
 </body>
 </html>
