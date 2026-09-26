@@ -50,7 +50,7 @@
 
   <!-- BARRA NARANJA SUPERIOR -->
   <div class="bg-amber-500 text-slate-950 text-[10px] sm:text-xs font-bold py-1.5 text-center z-50 relative tracking-wide shadow-md">
-    💈 León Barbershop • Matriz (9am - 8pm) • Cantera (10am - 8pm) • Citas: 993 404 9163
+    💈 León Barbershop • Matriz y Cantera (L-S 8pm) • Domingos hasta las 3:00 PM • Citas: 993 404 9163
   </div>
 
   <header class="sticky top-0 z-40 bg-[#0f141c]/95 border-b border-slate-800 backdrop-blur-md">
@@ -164,7 +164,7 @@
               <span class="text-amber-400">📍</span> Av. Plutarco Elías Calles #123 (Frente a Tortillería La Michoacana), Salida de Playas, Villa Playas del Rosario, Centro, Tabasco.
             </p>
             <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
-              <span class="text-amber-400">🕒</span> Lunes a Sábado: 9:00 AM – 8:00 PM
+              <span class="text-amber-400">🕒</span> Lunes a Sábado: 9:00 AM – 8:00 PM &bull; Dom: 9:00 AM – 3:00 PM
             </p>
             <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
               <span class="text-amber-400">📞</span> WhatsApp Citas: +52 993 404 9163
@@ -193,7 +193,7 @@
               <span class="text-amber-400">📍</span> Calle Tomás Garrido Canabal #407, Plaza Paseo Cantera, 86288 Playas del Rosario, Tabasco.
             </p>
             <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
-              <span class="text-amber-400">🕒</span> Lunes a Sábado: 10:00 AM – 8:00 PM
+              <span class="text-amber-400">🕒</span> Lunes a Sábado: 10:00 AM – 8:00 PM &bull; Dom: 10:00 AM – 3:00 PM
             </p>
             <p class="text-xs sm:text-sm text-slate-300 flex items-center gap-2">
               <span class="text-amber-400">📞</span> WhatsApp Citas: +52 993 404 9163
@@ -333,7 +333,7 @@
                 <p class="font-bold text-base text-slate-300 peer-checked:text-amber-400 flex items-center justify-between">
                   <span>Sucursal Matriz</span>
                 </p>
-                <p class="text-xs text-slate-500 mt-1 font-medium">9:00 AM - 8:00 PM</p>
+                <p class="text-xs text-slate-500 mt-1 font-medium">L-S: 9am - 8pm &bull; Dom: 9am - 3pm</p>
               </div>
             </div>
           </label>
@@ -345,7 +345,7 @@
                 <p class="font-bold text-base text-slate-300 peer-checked:text-amber-400 flex items-center justify-between">
                   <span>Paseo Cantera</span>
                 </p>
-                <p class="text-xs text-slate-500 mt-1 font-medium">10:00 AM - 8:00 PM</p>
+                <p class="text-xs text-slate-500 mt-1 font-medium">L-S: 10am - 8pm &bull; Dom: 10am - 3pm</p>
               </div>
             </div>
           </label>
@@ -686,7 +686,39 @@
       const isToday = (now.getFullYear() === selYear && (now.getMonth() + 1) === selMonth && now.getDate() === selDay);
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-      branchConfig[branchKey].slots.forEach(timeStr => {
+      // Detección automática de domingo (0 = Domingo)
+      const selectedDateObj = new Date(selYear, selMonth - 1, selDay);
+      const isSunday = (selectedDateObj.getDay() === 0);
+
+      // Si es domingo, limitamos el horario disponible hasta las 3:00 PM (15:00 hrs)
+      let availableSlots = branchConfig[branchKey].slots;
+      if (isSunday) {
+        availableSlots = availableSlots.filter(timeStr => {
+          const parts = timeStr.trim().split(' ');
+          const modifier = parts[1];
+          let [hours, minutes] = parts[0].split(':').map(Number);
+          if (modifier === 'PM' && hours !== 12) hours += 12;
+          if (modifier === 'AM' && hours === 12) hours = 0;
+          return (hours * 60 + minutes) <= (15 * 60);
+        });
+
+        // Si el usuario tenía seleccionado un horario de más tarde, se deselecciona automáticamente
+        if (selectedTime) {
+          const parts = selectedTime.trim().split(' ');
+          const modifier = parts[1];
+          let [hours, minutes] = parts[0].split(':').map(Number);
+          if (modifier === 'PM' && hours !== 12) hours += 12;
+          if (modifier === 'AM' && hours === 12) hours = 0;
+          if ((hours * 60 + minutes) > (15 * 60)) {
+            selectedTime = null;
+          }
+        }
+        if (!selectedTime) {
+          document.getElementById("selectionHint").textContent = "☀️ Horario especial de Domingo: abierto hasta las 3:00 PM";
+        }
+      }
+
+      availableSlots.forEach(timeStr => {
         const parts = timeStr.trim().split(' ');
         const modifier = parts[1];
         let [hours, minutes] = parts[0].split(':').map(Number);
